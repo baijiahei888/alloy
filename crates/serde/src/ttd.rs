@@ -1,6 +1,7 @@
 //! Json U256 serde helpers.
 
 use alloy_primitives::U256;
+use alloy_primitives::utils::ParseUnits::U256;
 use serde::{de::Error, Deserialize, Deserializer};
 use serde_json::Value;
 
@@ -49,7 +50,8 @@ where
         } else {
             // We could try to convert to a u128 here but there would probably be loss of
             // precision, so we just return an error.
-            return Err(Error::custom("Deserializing a large non-mainnet TTD is not supported"));
+            // return Err(Error::custom("Deserializing a large non-mainnet TTD is not supported"));
+            U256::from(value)
         }
     } else {
         // must be i64 - negative numbers are not supported
